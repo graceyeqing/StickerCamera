@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@android:color/transparent"
+    android:id="@+id/rl_item"
+    android:layout_height="match_parent">
+
+
+        <com.stickercamera.photopick.XImageView
+            android:id="@+id/icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true" />
+
+        <ImageView
+            android:id="@+id/iconFore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="#66666666"
+            android:visibility="gone"
+            android:adjustViewBounds="true" />
+        <FrameLayout
+            android:id="@+id/layout_check"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true">
+                <CheckBox
+                    android:id="@+id/check"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:button="@drawable/pick_photo_checkbox"
+                    android:focusable="false" />
+                <TextView
+                    android:id="@+id/check_num"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/red_dot_bg_40"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text=""
+                    android:visibility="gone"/>
+        </FrameLayout>
+
+</RelativeLayout>

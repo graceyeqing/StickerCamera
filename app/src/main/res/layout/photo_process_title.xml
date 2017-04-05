@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/base_title_tv_left"
+        style="@style/TitleSyle_left_view"
+        android:src="@drawable/button_return"/>
+
+    <it.sephiroth.android.library.widget.HListView
+        android:id="@+id/list_images"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:overScrollMode="always"
+        android:layout_toRightOf="@+id/base_title_tv_left"
+        android:layout_toLeftOf="@+id/base_title_tv_right"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:cacheColorHint="#000000"
+        android:listSelector="#00000000"/>
+
+    <TextView
+        android:id="@+id/base_title_tv_right"
+        style="@style/TitleSyle_right_view"
+        android:visibility="visible"
+        android:text="下一步"
+        android:textColor="@color/red"/>
+
+</RelativeLayout>

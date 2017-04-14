@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * 相册界面
@@ -32,19 +32,18 @@ import butterknife.InjectView;
  */
 public class AlbumActivity extends CameraBaseActivity {
 
+    @Bind(R.id.indicator)
+    PagerSlidingTabStrip tab;
+    @Bind(R.id.pager)
+    ViewPager pager;
     private Map<String, Album> albums;
     private List<String> paths = new ArrayList<String>();
-
-    @InjectView(R.id.indicator)
-    PagerSlidingTabStrip tab;
-    @InjectView(R.id.pager)
-    ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         albums = ImageUtils.findGalleries(this, paths, 0);
         //ViewPager的adapter
         FragmentPagerAdapter adapter = new TabPageIndicatorAdapter(getSupportFragmentManager());

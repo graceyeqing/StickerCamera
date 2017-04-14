@@ -304,7 +304,6 @@ public class FileUtils {
         File dir = new File(path);
         if (dir.exists() && dir.isDirectory()) {
             for (File file : dir.listFiles(new FileFilter() {
-
                 @Override
                 public boolean accept(File pathname) {
                     String filePath = pathname.getAbsolutePath();

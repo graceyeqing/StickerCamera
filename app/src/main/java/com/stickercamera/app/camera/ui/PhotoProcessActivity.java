@@ -53,7 +53,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.greenrobot.event.EventBus;
 import it.sephiroth.android.library.widget.AdapterView;
 import it.sephiroth.android.library.widget.HListView;
@@ -73,24 +73,24 @@ import static com.stickercamera.photopick.PhotoPickActivity.REQUEST_RESULT_PHOTO
 public class PhotoProcessActivity extends CameraBaseActivity {
 
     //滤镜图片
-    @InjectView(R.id.gpuimage)
+    @Bind(R.id.gpuimage)
     GPUImageView mGPUImageView;
     //绘图区域
-    @InjectView(R.id.drawing_view_container)
+    @Bind(R.id.drawing_view_container)
     ViewGroup drawArea;
     //底部按钮
-    @InjectView(R.id.sticker_btn)
+    @Bind(R.id.sticker_btn)
     TextView stickerBtn;
-    @InjectView(R.id.filter_btn)
+    @Bind(R.id.filter_btn)
     TextView filterBtn;
-    @InjectView(R.id.text_btn)
+    @Bind(R.id.text_btn)
     TextView labelBtn;
     //工具区
-    @InjectView(R.id.list_tools)
+    @Bind(R.id.list_tools)
     HListView bottomToolBar;//贴纸，滤镜列表
-    @InjectView(R.id.toolbar_area)
+    @Bind(R.id.toolbar_area)
     ViewGroup toolArea;
-    @InjectView(R.id.list_tags)
+    @Bind(R.id.list_tags)
     HListView mListTags;//贴纸标签
     HListView mListImages;//顶部小图展示列表
     private ImageView tvLeft;
@@ -125,7 +125,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_process);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         EffectUtil.clear();
         initView();
         initEvent();
@@ -218,7 +218,6 @@ public class PhotoProcessActivity extends CameraBaseActivity {
             @Override
             public void callback(Bitmap result) {
                 if (result != null) {
-//                    mGPUImageView.resetImage();
                     try {
                         mGPUImageView.getGPUImage().deleteImage();
                     }catch (Exception e){}
@@ -561,6 +560,8 @@ public class PhotoProcessActivity extends CameraBaseActivity {
                                     View arg1, int arg2, long arg3) {
                 tagAdapter.setCurrentTag(arg2);
                 tagAdapter.notifyDataSetChanged();
+                bottomToolBar.setSelection(arg2*5);
+
             }
         });
     }

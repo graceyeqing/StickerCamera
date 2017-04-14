@@ -42,6 +42,25 @@ public class EffectUtil {
         addonList.add(new Addon(R.drawable.sticker6));
         addonList.add(new Addon(R.drawable.sticker7));
         addonList.add(new Addon(R.drawable.sticker8));
+        addonList.add(new Addon(R.drawable.sticker9));
+        addonList.add(new Addon(R.drawable.sticker10));
+        addonList.add(new Addon(R.drawable.sticker11));
+        addonList.add(new Addon(R.drawable.sticker12));
+        addonList.add(new Addon(R.drawable.sticker13));
+        addonList.add(new Addon(R.drawable.sticker14));
+        addonList.add(new Addon(R.drawable.sticker15));
+        addonList.add(new Addon(R.drawable.sticker16));
+        addonList.add(new Addon(R.drawable.sticker17));
+        addonList.add(new Addon(R.drawable.sticker18));
+        addonList.add(new Addon(R.drawable.sticker19));
+        addonList.add(new Addon(R.drawable.sticker20));
+    }
+
+    public static void resetAddonList(List<Addon> stickerList){
+        if(addonList!=null){
+            addonList.clear();
+            addonList.addAll(stickerList);
+        }
     }
 
     public static void clear() {

@@ -20,7 +20,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -55,8 +54,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 import static com.stickercamera.photopick.PhotoPickActivity.EXTRA_RESULT_PHOTO_LIST;
 import static com.stickercamera.photopick.PhotoPickActivity.MODE_MUTIL_CROP;
@@ -84,25 +83,25 @@ public class CameraActivity extends CameraBaseActivity {
     private int mCurrentCameraId = 0;  //1是前置 0是后置
     private Handler handler = new Handler();
 
-    @InjectView(R.id.masking)
+    @Bind(R.id.masking)
     CameraGrid cameraGrid;
-    @InjectView(R.id.photo_area)
+    @Bind(R.id.photo_area)
     LinearLayout photoArea;
-    @InjectView(R.id.panel_take_photo)
+    @Bind(R.id.panel_take_photo)
     View takePhotoPanel;
-    @InjectView(R.id.takepicture)
+    @Bind(R.id.takepicture)
     Button takePicture;
-    @InjectView(R.id.flashBtn)
+    @Bind(R.id.flashBtn)
     ImageView flashBtn;
-    @InjectView(R.id.change)
+    @Bind(R.id.change)
     ImageView changeBtn;
-    @InjectView(R.id.back)
+    @Bind(R.id.back)
     ImageView backBtn;
-    @InjectView(R.id.next)
+    @Bind(R.id.next)
     ImageView galleryBtn;
-    @InjectView(R.id.focus_index)
+    @Bind(R.id.focus_index)
     View focusIndex;
-    @InjectView(R.id.surfaceView)
+    @Bind(R.id.surfaceView)
     SurfaceView surfaceView;
 
 
@@ -111,7 +110,7 @@ public class CameraActivity extends CameraBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         mCameraHelper = new CameraHelper(this);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
         initEvent();
     }
@@ -125,23 +124,23 @@ public class CameraActivity extends CameraBaseActivity {
         surfaceView.getHolder().addCallback(new SurfaceCallback());//为SurfaceView的句柄添加一个回调函数
 
         //设置相机界面,照片列表,以及拍照布局的高度(保证相机预览为正方形)
-        ViewGroup.LayoutParams layout = cameraGrid.getLayoutParams();
-        layout.height = App.getApp().getScreenWidth();
-        layout = photoArea.getLayoutParams();
-        layout.height = DistanceUtil.getCameraPhotoAreaHeight();
-        layout = takePhotoPanel.getLayoutParams();
-        layout.height = App.getApp().getScreenHeight()
-                - App.getApp().getScreenWidth()
-                - DistanceUtil.getCameraPhotoAreaHeight();
+//        ViewGroup.LayoutParams layout = cameraGrid.getLayoutParams();
+//        layout.height = App.getApp().getScreenWidth();
+//        layout = photoArea.getLayoutParams();
+//        layout.height = DistanceUtil.getCameraPhotoAreaHeight();
+//        layout = takePhotoPanel.getLayoutParams();
+//        layout.height = App.getApp().getScreenHeight()
+//                - App.getApp().getScreenWidth()
+//                - DistanceUtil.getCameraPhotoAreaHeight();
 
         //添加系统相册内的图片
-        ArrayList<PhotoItem> sysPhotos = FileUtils.getInst().findPicsInDir(
-                FileUtils.getInst().getSystemPhotoPath());
-        int showNumber = sysPhotos.size() > photoNumber ? photoNumber
-                : sysPhotos.size();
-        for (int i = 0; i < showNumber; i++) {
-            addPhoto(sysPhotos.get(showNumber - 1 - i));
-        }
+//        ArrayList<PhotoItem> sysPhotos = FileUtils.getInst().findPicsInDir(
+//                FileUtils.getInst().getSystemPhotoPath());
+//        int showNumber = sysPhotos.size() > photoNumber ? photoNumber
+//                : sysPhotos.size();
+//        for (int i = 0; i < showNumber; i++) {
+//            addPhoto(sysPhotos.get(showNumber - 1 - i));
+//        }
     }
 
     private void addPhoto(PhotoItem photoItem) {

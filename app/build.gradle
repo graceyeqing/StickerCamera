@@ -60,4 +60,5 @@ dependencies {
     compile 'it.sephiroth.android.library.horizontallistview:hlistview:1.2.2'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'me.tatarka:gradle-retrolambda:3.1.0'
 }

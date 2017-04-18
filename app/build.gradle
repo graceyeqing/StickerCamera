@@ -1,11 +1,13 @@
 
 apply plugin: 'me.tatarka.retrolambda'
+
 def isDebug = false
 if(isDebug.booleanValue()){
     apply plugin: 'com.android.application'
 }else{
     apply plugin: 'com.android.library'
 }
+apply plugin: 'com.github.dcendents.android-maven'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"

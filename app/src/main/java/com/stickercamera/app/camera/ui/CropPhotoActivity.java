@@ -32,9 +32,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import butterknife.ButterKnife;
-import butterknife.Bind;
-
 /**
  * 裁剪图片界面
  * Created by sky on 2015/7/8.
@@ -49,15 +46,10 @@ public class CropPhotoActivity extends CameraBaseActivity {
     private int initWidth, initHeight;
     private static final int MAX_WRAP_SIZE  = 2048;
 
-    @Bind(R.id.crop_image)
     ImageViewTouch cropImage;
-    @Bind(R.id.draw_area)
     ViewGroup drawArea;
-    @Bind(R.id.wrap_image)
     View wrapImage;
-    @Bind(R.id.btn_crop_type)
     View btnCropType;
-    @Bind(R.id.image_center)
     ImageView imageCenter;
 
     @Override
@@ -65,7 +57,6 @@ public class CropPhotoActivity extends CameraBaseActivity {
         super.onCreate(savedInstanceState);
         // 显示界面
         setContentView(R.layout.activity_new_crop);
-        ButterKnife.bind(this);
         fileUri = getIntent().getData();
         initView();
         initEvent();
@@ -127,6 +118,11 @@ public class CropPhotoActivity extends CameraBaseActivity {
     }
 
     private void initView() {
+        cropImage = (ImageViewTouch) findViewById(R.id.crop_image);
+        drawArea = (ViewGroup) findViewById(R.id.draw_area);
+        wrapImage = findViewById(R.id.wrap_image);
+        btnCropType = findViewById(R.id.btn_crop_type);
+        imageCenter = (ImageView) findViewById(R.id.image_center);
         drawArea.getLayoutParams().height = App.getApp().getScreenWidth();
         InputStream inputStream = null;
         try {
@@ -235,6 +231,5 @@ public class CropPhotoActivity extends CameraBaseActivity {
         }
         return croppedImage;
     }
-
 
 }

@@ -29,7 +29,7 @@
 
         <TextView
             style="@style/text_default"
-            android:text="这只是一个标签~"/>
+            android:text="今天心情不错~"/>
 
         <TextView
             style="@style/text_default"
@@ -41,15 +41,15 @@
 
         <TextView
             style="@style/text_default"
-            android:text="哈哈哈哈"/>
+            android:text="谁都不服就服你"/>
 
         <TextView
             style="@style/text_default"
-            android:text="我也不知道该推荐什么"/>
+            android:text="感觉自己萌萌哒"/>
 
         <TextView
             style="@style/text_default"
-            android:text="\@达达达达sky"/>
+            android:text="人生最大的难题，今晚吃什么"/>
 
         <TextView
             style="@style/text_default"

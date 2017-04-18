@@ -52,8 +52,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import butterknife.ButterKnife;
-import butterknife.Bind;
 import de.greenrobot.event.EventBus;
 import it.sephiroth.android.library.widget.AdapterView;
 import it.sephiroth.android.library.widget.HListView;
@@ -73,24 +71,16 @@ import static com.stickercamera.photopick.PhotoPickActivity.REQUEST_RESULT_PHOTO
 public class PhotoProcessActivity extends CameraBaseActivity {
 
     //滤镜图片
-    @Bind(R.id.gpuimage)
     GPUImageView mGPUImageView;
     //绘图区域
-    @Bind(R.id.drawing_view_container)
     ViewGroup drawArea;
     //底部按钮
-    @Bind(R.id.sticker_btn)
     TextView stickerBtn;
-    @Bind(R.id.filter_btn)
     TextView filterBtn;
-    @Bind(R.id.text_btn)
     TextView labelBtn;
     //工具区
-    @Bind(R.id.list_tools)
     HListView bottomToolBar;//贴纸，滤镜列表
-    @Bind(R.id.toolbar_area)
     ViewGroup toolArea;
-    @Bind(R.id.list_tags)
     HListView mListTags;//贴纸标签
     HListView mListImages;//顶部小图展示列表
     private ImageView tvLeft;
@@ -125,7 +115,6 @@ public class PhotoProcessActivity extends CameraBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_process);
-        ButterKnife.bind(this);
         EffectUtil.clear();
         initView();
         initEvent();
@@ -157,7 +146,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
                     //保存前一张图片
                     showProgressDialog("");
                     isNext = false;
-                    savePicture();
+//                    savePicture();
                     prePickPosition = currentPickPosition;
                     currentPickPosition = position;
 
@@ -222,7 +211,15 @@ public class PhotoProcessActivity extends CameraBaseActivity {
                         mGPUImageView.getGPUImage().deleteImage();
                     }catch (Exception e){}
                     currentBitmap = result;
-                    mGPUImageView.setImage(currentBitmap);
+                    /** 获取图片的旋转角度，有些系统把拍照的图片旋转了，有的没有旋转
+                     */
+                    int degree = ImageUtils.getImageDegrees(imageUri.getPath());
+                    /**
+                     * 把图片旋转为正的方向
+                     */
+                    Bitmap newbitmap = ImageUtils.imageWithFixedRotation(currentBitmap,degree);
+                    mGPUImageView.setImage(newbitmap);
+                    dismissProgressDialog();
                 }
 
             }
@@ -248,6 +245,19 @@ public class PhotoProcessActivity extends CameraBaseActivity {
     }
 
     private void initView() {
+        //滤镜图片
+        mGPUImageView = (GPUImageView) findViewById(R.id.gpuimage);
+        //绘图区域
+        drawArea = (ViewGroup) findViewById(R.id.drawing_view_container);
+        //底部按钮
+        stickerBtn = (TextView) findViewById(R.id.sticker_btn);
+        filterBtn = (TextView) findViewById(R.id.filter_btn);
+        labelBtn = (TextView) findViewById(R.id.text_btn);
+        //工具区
+        bottomToolBar = (HListView) findViewById(R.id.list_tools);
+        toolArea = (ViewGroup) findViewById(R.id.toolbar_area);
+        mListTags = (HListView) findViewById(R.id.list_tags);
+
         //添加贴纸水印的画布
         mImageView = new MyImageViewDrawableOverlay(this);
         View overlay = LayoutInflater.from(PhotoProcessActivity.this).inflate(
@@ -361,10 +371,6 @@ public class PhotoProcessActivity extends CameraBaseActivity {
             emptyLabelView.setVisibility(View.VISIBLE);
         });
 
-
-//        titleBar.setRightBtnOnclickListener(v -> {
-//            savePicture();
-//        });
     }
 
     //保存图片
@@ -380,7 +386,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
             e.printStackTrace();
             cv.drawBitmap(currentBitmap, null, dst, null);
         }
-        //加贴纸水印
+        //加贴纸水印和标签
         EffectUtil.applyOnSave(cv, mImageView, hightlistViews.get(currentPickPosition),
                 mPickData.get(currentPickPosition).getLabels());
 
@@ -406,7 +412,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
 
                 String picName = TimeUtils.dtFormat(new Date(), "yyyyMMddHHmmss");
                 //保存到文件夹
-                fileName = ImageUtils.saveToFile(FileUtils.getInst().getPhotoSavedPath() + "/" + picName, false, bitmap);
+                fileName = ImageUtils.saveToFile(FileUtils.getInst().getPhotoSavedPath() + picName, false, bitmap);
                 //保存到相册
                 ImageUtils.saveImageToDICM(PhotoProcessActivity.this, picName, bitmap);
 

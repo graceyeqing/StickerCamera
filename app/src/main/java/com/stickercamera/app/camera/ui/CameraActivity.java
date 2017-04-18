@@ -1,8 +1,10 @@
 package com.stickercamera.app.camera.ui;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
@@ -14,6 +16,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -54,9 +58,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 import static com.stickercamera.photopick.PhotoPickActivity.EXTRA_RESULT_PHOTO_LIST;
 import static com.stickercamera.photopick.PhotoPickActivity.MODE_MUTIL_CROP;
 import static com.stickercamera.photopick.PhotoPickActivity.REQUEST_RESULT_PHOTO;
@@ -83,39 +84,62 @@ public class CameraActivity extends CameraBaseActivity {
     private int mCurrentCameraId = 0;  //1是前置 0是后置
     private Handler handler = new Handler();
 
-    @Bind(R.id.masking)
     CameraGrid cameraGrid;
-    @Bind(R.id.photo_area)
     LinearLayout photoArea;
-    @Bind(R.id.panel_take_photo)
     View takePhotoPanel;
-    @Bind(R.id.takepicture)
     Button takePicture;
-    @Bind(R.id.flashBtn)
     ImageView flashBtn;
-    @Bind(R.id.change)
     ImageView changeBtn;
-    @Bind(R.id.back)
     ImageView backBtn;
-    @Bind(R.id.next)
     ImageView galleryBtn;
-    @Bind(R.id.focus_index)
     View focusIndex;
-    @Bind(R.id.surfaceView)
     SurfaceView surfaceView;
-
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         mCameraHelper = new CameraHelper(this);
-        ButterKnife.bind(this);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
+        }
         initView();
         initEvent();
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
 
+        if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+            } else
+            {
+                // Permission Denied
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
     private void initView() {
+        cameraGrid = (CameraGrid) findViewById(R.id.masking);
+        photoArea = (LinearLayout) findViewById(R.id.photo_area);
+        takePhotoPanel = findViewById(R.id.panel_take_photo);
+        takePicture = (Button) findViewById(R.id.takepicture);
+        flashBtn = (ImageView) findViewById(R.id.flashBtn);
+        changeBtn = (ImageView) findViewById(R.id.change);
+        backBtn = (ImageView) findViewById(R.id.back);
+        galleryBtn = (ImageView) findViewById(R.id.next);
+        focusIndex = findViewById(R.id.focus_index);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         surfaceHolder.setKeepScreenOn(true);
@@ -870,5 +894,4 @@ public class CameraActivity extends CameraBaseActivity {
         }
         return c;
     }
-
 }

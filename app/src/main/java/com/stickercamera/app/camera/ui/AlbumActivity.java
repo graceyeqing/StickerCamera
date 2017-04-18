@@ -21,9 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 /**
  * 相册界面
  * Created by sky on 2015/7/8.
@@ -32,9 +29,7 @@ import butterknife.ButterKnife;
  */
 public class AlbumActivity extends CameraBaseActivity {
 
-    @Bind(R.id.indicator)
     PagerSlidingTabStrip tab;
-    @Bind(R.id.pager)
     ViewPager pager;
     private Map<String, Album> albums;
     private List<String> paths = new ArrayList<String>();
@@ -43,7 +38,8 @@ public class AlbumActivity extends CameraBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
-        ButterKnife.bind(this);
+        tab = (PagerSlidingTabStrip) findViewById(R.id.indicator);
+        pager = (ViewPager) findViewById(R.id.pager);
         albums = ImageUtils.findGalleries(this, paths, 0);
         //ViewPager的adapter
         FragmentPagerAdapter adapter = new TabPageIndicatorAdapter(getSupportFragmentManager());
@@ -51,10 +47,6 @@ public class AlbumActivity extends CameraBaseActivity {
         tab.setViewPager(pager);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent result) {

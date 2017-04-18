@@ -18,11 +18,11 @@ public class GenericProgressDialog extends AlertDialog {
     private boolean      mProgressVisiable;
 
     public GenericProgressDialog(Context context) {
-        super(context/*,R.style.Float*/);
+        super(context,R.style.Dialog);
     }
 
     public GenericProgressDialog(Context context, int theme) {
-        super(context,/*, R.style.Float*/theme);
+        super(context,theme);
     }
 
     @Override

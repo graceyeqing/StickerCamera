@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
 
+import com.common.util.ImageUtils;
 import com.github.skykai.stickercamera.R;
 
 import java.util.concurrent.ExecutorService;
@@ -84,13 +85,19 @@ public class ImageLoad {
             options.inSampleSize = calImageScaleSize(actualWidth, actualHeight, width, height);
 
             bitmap = BitmapFactory.decodeFile(imageUrl, options);
+            /** 获取图片的旋转角度，有些系统把拍照的图片旋转了，有的没有旋转
+                    */
+            int degree = ImageUtils.getImageDegrees(imageUrl);
+            /**
+             * 把图片旋转为正的方向
+             */
+            Bitmap newbitmap = ImageUtils.imageWithFixedRotation(bitmap,degree);
             if(bitmap != null)
-                LruMemory.getInstance().addBitmap(generateLruKey(imageUrl,width,height), bitmap);
+                LruMemory.getInstance().addBitmap(generateLruKey(imageUrl,width,height), newbitmap);
 
-            handler.post(new DisplayTask(new ImageInfo(imageUrl,bitmap,imageView)));
+            handler.post(new DisplayTask(new ImageInfo(imageUrl,newbitmap,imageView)));
         }
     }
-
     class DisplayTask implements Runnable{
 
         private ImageInfo imageInfo;

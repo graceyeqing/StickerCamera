@@ -30,8 +30,6 @@ import com.stickercamera.photopick.XImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.Bind;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -42,9 +40,7 @@ import de.greenrobot.event.EventBus;
  */
 public class MainActivity extends BaseActivity {
 
-    @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
     private List<FeedItem> feedList;
     private PictureAdapter mAdapter;
@@ -54,7 +50,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initView();
 
@@ -102,6 +97,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         titleBar.hideLeftBtn();
         titleBar.hideRightBtn();
 
@@ -206,11 +204,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.pictureLayout)
         RelativeLayout pictureLayout;
-        @Bind(R.id.picture)
         XImageView picture;
-        @Bind(R.id.pic_num)
         TextView mPicNum;
         private List<TagItem> tagList = new ArrayList<>();
 
@@ -227,7 +222,9 @@ public class MainActivity extends BaseActivity {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            pictureLayout = (RelativeLayout) itemView.findViewById(R.id.pictureLayout);
+            picture = (XImageView) itemView.findViewById(R.id.picture);
+            mPicNum = (TextView) itemView.findViewById(R.id.pic_num);
         }
     }
 

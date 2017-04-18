@@ -16,9 +16,6 @@ import com.github.skykai.stickercamera.R;
 import com.stickercamera.AppConstants;
 import com.stickercamera.base.BaseActivity;
 
-import butterknife.ButterKnife;
-import butterknife.Bind;
-
 
 /**
  * 编辑文字
@@ -30,9 +27,7 @@ public class EditTextActivity extends BaseActivity {
 
     private final static int MAX        = 10;
     private int maxlength               = MAX;
-    @Bind(R.id.text_input)
     EditText contentView;
-    @Bind(R.id.tag_input_tips)
     TextView numberTips;
 
     public static void openTextEdit(Activity mContext, String defaultStr,int maxLength, int reqCode) {
@@ -48,7 +43,9 @@ public class EditTextActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_text);
-        ButterKnife.bind(this);
+        contentView = (EditText) findViewById(R.id.text_input);
+        numberTips = (TextView) findViewById(R.id.tag_input_tips);
+
         maxlength = getIntent().getIntExtra(AppConstants.PARAM_MAX_SIZE, MAX);
 
         String defaultStr = getIntent().getStringExtra(AppConstants.PARAM_EDIT_TEXT);
@@ -103,4 +100,5 @@ public class EditTextActivity extends BaseActivity {
                                                         + maxlength + ")");
                                  }
                              };
+
 }

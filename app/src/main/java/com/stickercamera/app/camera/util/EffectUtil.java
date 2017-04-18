@@ -263,12 +263,12 @@ public class EffectUtil {
             applyOnSave(mCanvas, processImage, view);
         }
 
-//        if (labels != null && labels.size() > 0) {
-//
-//            for (LabelView item : labels) {
-//                saveOnLables(mCanvas, item);
-//            }
-//        }
+        if (labels != null && labels.size() > 0) {
+
+            for (LabelView item : labels) {
+                saveOnLables(mCanvas, item);
+            }
+        }
     }
 
     private static void applyOnSave(Canvas mCanvas, ImageViewTouch processImage, MyHighlightView view) {
